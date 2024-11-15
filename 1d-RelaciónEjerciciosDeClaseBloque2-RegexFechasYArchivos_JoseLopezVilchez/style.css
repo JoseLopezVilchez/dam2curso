@@ -1,0 +1,105 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.barraMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(255, 222, 180);
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+
+        li {
+
+            a {
+
+                background-color: rgb(255, 150, 90);
+                text-align: center;
+                margin: 5px;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                border-color: rgba(196, 123, 29, 0.727);
+                border-width: 1px;
+                border-style: solid;
+                border-radius: 5px;
+                box-shadow: 3px 3px 10px rgb(255, 187, 92);
+                text-decoration: none;
+                color: white;
+                font-size: x-large;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-color: rgba(114, 72, 18, 0.727);
+    border-width: 1px;
+    border-style: solid;
+    background-color: rgb(240, 177, 95);
+
+    div {
+        border-color: rgba(114, 72, 18, 0.727);
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 20px;
+        background-color: rgb(255, 222, 180);
+        height: 60%;
+        width: 60%;
+        padding: 30px;
+        color: rgb(97, 59, 16);
+        font-weight: bolder;
+        font-size: x-large;
+        text-wrap: wrap;
+
+        span {
+            color: rgb(183, 40, 40);
+        }
+
+        .imagenes {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            width: auto;
+            height: auto;
+            background-color: rgb(240, 177, 95);
+
+            div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: fit-content;
+                width: fit-content;
+                margin: 20px;
+
+                img {
+                    height: 200px;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
