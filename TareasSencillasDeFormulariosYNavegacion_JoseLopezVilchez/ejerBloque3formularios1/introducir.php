@@ -56,8 +56,8 @@
 </head>
 <body>
 
-<?php
-/*Ejercicio 2 Bloque 3: Recuperar los datos introducidos en un formulario
+<!--
+Ejercicio 2 Bloque 3: Recuperar los datos introducidos en un formulario
 Etapa 1
 Vamos a empezar escribiendo un script PHP que muestre un formulario que permita introducir
 el apellido y el nombre de un autor.
@@ -72,38 +72,49 @@ respectivamente apellido y nombre (atributo name). El botón "Guardar" se llama 
 código CSS aplicado a las etiquetas <label>.
  Este formulario se tratará por el script PHP introducir.php.
  Por el momento, este script no contiene código PHP.*/
-?>
+-->
 
 <article>
     <h2>Apellido y nombre del nuevo autor:</h2>
 
-    <form action="">
+    <form action="introducir.php" method="post">
         <div>
-            <label for="apellido">Apellido</label><input id="apellido" name="apellido" type="text"/>
+            <label for="apellido">Apellido</label><input id="apellido" name="apellido" type="text" maxlength="40"/>
         </div>
         <div>
-            <label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text"/>
+            <label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" maxlength="40"/>
         </div>
         
         <input id="guardar" name="ok" type="submit" value="Guardar"/>
     </form>
+
+    <h4>
+    <?php
+
+    /*Etapa 2
+    Ahora vamos a añadir el código PHP que permite tratar el formulario y recuperar la
+    información introducida en los dos campos.
+    Indicaciones:
+     Al inicio del script, inserta una sección de código PHP que verifique si el script se llama
+    durante el tratamiento del formulario, y, si es el caso, recupere el contenido de los
+    campos “Apellido” y “Nombre” en dos variables $apellido y $nombre. Define otra
+    variable $autor conteniendo la concatenación de las dos variables anteriores, separadas
+    por un espacio.
+     En la página HTML, bajo el formulario, muestra el valor de la variable $autor si está
+    definida.*/
+
+    if (isset($_POST['ok'])) {
+        $apellido = $_POST['apellido'];
+        $nombre = $_POST['nombre'];
+
+        $autor = $nombre . ' ' . $apellido;
+
+        print $autor;
+    }
+
+    ?>
+    </h4>
     </article>
-
-<?php
-/*Etapa 2
-Ahora vamos a añadir el código PHP que permite tratar el formulario y recuperar la
-información introducida en los dos campos.
-Indicaciones:
- Al inicio del script, inserta una sección de código PHP que verifique si el script se llama
-durante el tratamiento del formulario, y, si es el caso, recupere el contenido de los
-campos “Apellido” y “Nombre” en dos variables $apellido y $nombre. Define otra
-variable $autor conteniendo la concatenación de las dos variables anteriores, separadas
-por un espacio.
- En la página HTML, bajo el formulario, muestra el valor de la variable $autor si está
-definida.*/
-?>
-
-
 
 </body>
 </html>
