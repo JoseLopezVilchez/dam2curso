@@ -56,33 +56,69 @@
 </head>
 <body>
 
-<!--
-Ejercicio 2 Bloque 3: Recuperar los datos introducidos en un formulario
-Etapa 1
-Vamos a empezar escribiendo un script PHP que muestre un formulario que permita introducir
-el apellido y el nombre de un autor.
-Indicaciones:
- En un nuevo directorio, crea un nuevo script PHP introducir.php
- En este nuevo script, introduce el código HTML que permite mostrar una página HTML
-llamada “Introducir” conteniendo un formulario.
+<?php
 
- Los campos "Apellido" y "Nombre" son de tipo texto, de tamaño 40, y se llaman
-respectivamente apellido y nombre (atributo name). El botón "Guardar" se llama ok
-(atributo name). La alineación de los campos se obtiene gracias a la utilización de
-código CSS aplicado a las etiquetas <label>.
- Este formulario se tratará por el script PHP introducir.php.
- Por el momento, este script no contiene código PHP.*/
--->
+    /*
+        Etapa 1
+
+        Vamos a empezar utilizando un filtro para comprobar los datos introducidos en el formulario y
+        adaptar el mensaje mostrado después de guardarlos.
+
+        Indicaciones:
+
+         En un nuevo directorio, copia el script introducir.php desarrollado en el ejercicio 2.
+
+         Define un filtro de tipo expresión regular que permita verificar que el apellido y el
+        nombre solo contienen letras, espacios y guiones, con una longitud comprendida entre
+        1 y 40 caracteres. En caso de error, el filtro debe devolver NULL en lugar de FALSE.
+
+         Utiliza este filtro para verificar los datos introducidos en los campos "Apellido" y
+        “Nombre” del formulario.
+
+         Si son correctos, recupera los valores filtrados para guardar la variable $autor.
+
+         Si no son correctos, muestra en el formulario un mensaje del tipo "Los datos
+        introducidos no son correctos.", en lugar del nombre del autor que se muestra en caso
+        de éxito.
+
+        Etapa 2
+
+        Deseamos mejorar la solución anterior y dejar los datos introducidos del usuario en los campos
+        del formulario en caso de error para que los pueda corregir sin tener que volver a introducirlos.
+        Indicaciones:
+
+         Al inicio del script, inicializa dos variables $apellido y $nombre con cadenas vacías.
+
+         Utiliza estas dos variables para volver a asignar el valor de los campos del formulario
+        (atributo value).
+
+         Si los datos introducidos no son correctos, alimenta las variables $apellido y $nombre
+        con los valores introducidos de nuevo por el usuario. Comprueba que estos valores se
+        "limpian" correctamente para poder mostrarse sin riesgo en los campos del formulario
+        (se puede utilizar un filtro SANITIZE para esto). Si los datos introducidos son correctos,
+        comprueba que los campos del formulario están vacíos.
+    */
+
+    if (isset($_POST['ok']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['nombre']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['apellido'])) {
+        $autor = $_POST['nombre'] . ' ' . $_POST['apellido'];
+        $nombre = '';
+        $apellido = '';
+    } else {
+        $apellido = htmlspecialchars($_POST['apellido']);
+        $nombre = htmlspecialchars($_POST['nombre']);
+    }
+
+    ?>
 
 <article>
     <h2>Apellido y nombre del nuevo autor:</h2>
 
     <form action="introducir.php" method="post">
         <div>
-            <label for="apellido">Apellido</label><input id="apellido" name="apellido" type="text" maxlength="40"/>
+            <label for="apellido">Apellido</label><input id="apellido" name="apellido" type="text" maxlength="40" value="<?php print $apellido ?>"/>
         </div>
         <div>
-            <label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" maxlength="40"/>
+            <label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" maxlength="40" value="<?php print $nombre ?>"/>
         </div>
         
         <input id="guardar" name="ok" type="submit" value="Guardar"/>
@@ -90,28 +126,11 @@ código CSS aplicado a las etiquetas <label>.
 
     <h4>
     <?php
-
-    /*Etapa 2
-    Ahora vamos a añadir el código PHP que permite tratar el formulario y recuperar la
-    información introducida en los dos campos.
-    Indicaciones:
-     Al inicio del script, inserta una sección de código PHP que verifique si el script se llama
-    durante el tratamiento del formulario, y, si es el caso, recupere el contenido de los
-    campos “Apellido” y “Nombre” en dos variables $apellido y $nombre. Define otra
-    variable $autor conteniendo la concatenación de las dos variables anteriores, separadas
-    por un espacio.
-     En la página HTML, bajo el formulario, muestra el valor de la variable $autor si está
-    definida.*/
-
-    if (isset($_POST['ok'])) {
-        $apellido = $_POST['apellido'];
-        $nombre = $_POST['nombre'];
-
-        $autor = $nombre . ' ' . $apellido;
-
+    if (isset($autor)) {
         print $autor;
+    } else {
+        print 'Los datos introducidos no son correctos';
     }
-
     ?>
     </h4>
     </article>

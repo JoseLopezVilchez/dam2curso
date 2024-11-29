@@ -33,23 +33,32 @@
 
 <?php
 
-/*Etapa 2
-Ahora vamos a escribir el script PHP que se llama en la página.
+/*
+Ejercicio 3 Bloque 3: controlar los datos que se pasan por la URL
+
 Indicaciones:
- Crea un nuevo script PHP llamado autor.php.
- En este script, inserta una sección de código PHP que debe incluir el script
-commun.inc.php, recuperando el número del autor que se pasa en la URL, y a
-continuación el nombre del autor correspondiente en la tabla $autores.
- Añade el código HTML de la página llamada “Autor” y muestra el nombre del autor en
-una etiqueta <h1> (en una versión más completa, esta página se utilizará para mostrar
-la información detallada sobre el autor).
- Añade también un enlace "Volver a la lista" que permita volver a la página index.php.*/
+
+ En un nuevo directorio, copia los scripts commun.inc.php, index.php y autor.php
+desarrollados en el ejercicio 2.
+
+ En el script autor.php, alimenta la variable $autor con el nombre del autor, únicamente
+si el número que se pasa en la URL es un entero y este número se corresponde con un
+número de un autor (índice en la tabla $autores).
+
+ En la página HTML, muestra el nombre del autor si está definido o "Autor no existente"
+en caso contrario.
+
+ Comprueba el script modificado llamándolo directamente en su navegador con
+diferentes casos: autor.php (sin argumento), autor.php?numero (argumento vacío),
+autor.php?numero=abc (argumento de tipo incorrecto), autor.php?numero=99
+(número que no existe) y autor.php?numero=0 (argumento correcto).
+*/
 
 require 'commun.inc.php';
 ?>
 
 <div>
-    <h1><?php print $autores[$_GET['numero']] ?></h1>
+    <h1><?php print (is_numeric($_GET['numero']) && array_key_exists($_GET['numero'], $autores)) ? $autores[$_GET['numero']] : 'Autor no existente' ?></h1>
     <a href="index.php">Volver a la lista</a>
 </div>
 
