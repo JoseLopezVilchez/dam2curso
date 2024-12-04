@@ -73,13 +73,11 @@ y TRUE en caso de éxito. En caso de éxito, recupere los valores
 introducidos en las variables $apellido y $nombre.*/
 
 if (isset($_POST['ok']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['nombre']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['apellido'])) {
-        $autor = $_POST['nombre'] . ' ' . $_POST['apellido'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
+        $autor = htmlspecialchars($_POST['nombre']) . ' ' . htmlspecialchars($_POST['apellido']);
+        $nombre = htmlspecialchars($_POST['nombre']);
+        $apellido = htmlspecialchars($_POST['apellido']);
         $ok = true;
 } else {
-        $apellido = htmlspecialchars($_POST['apellido']);
-        $nombre = htmlspecialchars($_POST['nombre']);
         $ok = false;
 }
 
@@ -92,14 +90,21 @@ datos:
  ejecutar la consulta preparada.*/
 
 if ($ok) {
-    
+    $conn = new mysqli('127.0.0.1', 'root', '', 'autores');
+
+    $consulta = 'INSERT INTO `autores` (`apellido`, `nombre`) VALUES ("' . $apellido . '", "' . $nombre . '")';
+
+    $conn->query($consulta);
+
+    if ($conn->connect_error) {
+        $ok = false;
+        print $conn->connect_error;
+    }
 }
 
 /* En el código anterior, en cada etapa compruebe el resultado de la
 instrucción, asigne la variable $ok en consecuencia y ejecute la siguiente
 instrucción solo en caso de éxito.*/
-
-
 
 /* Cuando termine la inserción del nuevo autor en la base de datos,
 compruebe que todo haya ido bien. En caso de éxito, prepare un
