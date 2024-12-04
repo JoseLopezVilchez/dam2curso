@@ -39,4 +39,6 @@ var_dump($sessionId); //Muestra session id previamente almacenado
 
 session_id('4523452342'); //Cambia el session id por valor introducido
 
+
+
 ?>
