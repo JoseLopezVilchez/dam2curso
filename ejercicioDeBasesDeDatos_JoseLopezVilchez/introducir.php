@@ -73,12 +73,14 @@ y TRUE en caso de éxito. En caso de éxito, recupere los valores
 introducidos en las variables $apellido y $nombre.*/
 
 if (isset($_POST['ok']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['nombre']) && preg_match('/^[a-zA-Z -]{1,40}$/', $_POST['apellido'])) {
-        $autor = htmlspecialchars($_POST['nombre']) . ' ' . htmlspecialchars($_POST['apellido']);
-        $nombre = htmlspecialchars($_POST['nombre']);
-        $apellido = htmlspecialchars($_POST['apellido']);
+        $autor = $_POST['nombre'] . ' ' . $_POST['apellido'];
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
         $ok = true;
 } else {
         $ok = false;
+        $nombre = htmlspecialchars($_POST['nombre']);
+        $apellido = htmlspecialchars($_POST['apellido']);
 }
 
 /* Si la validación de datos es correcta (la variable $ok es true), inserte las
@@ -89,24 +91,11 @@ datos:
  asociar los argumentos (con las variables $apellido y $nombre);
  ejecutar la consulta preparada.*/
 
-if ($ok) {
-    $conn = new mysqli('127.0.0.1', 'root', '', 'autores');
-
-    $consulta = 'INSERT INTO `autores` (`apellido`, `nombre`) VALUES ("' . $apellido . '", "' . $nombre . '")';
-
-    $conn->query($consulta);
-
-    if ($conn->connect_error) {
-        $ok = false;
-        print $conn->connect_error;
-    }
-}
-
 /* En el código anterior, en cada etapa compruebe el resultado de la
 instrucción, asigne la variable $ok en consecuencia y ejecute la siguiente
-instrucción solo en caso de éxito.*/
+instrucción solo en caso de éxito.
 
-/* Cuando termine la inserción del nuevo autor en la base de datos,
+ Cuando termine la inserción del nuevo autor en la base de datos,
 compruebe que todo haya ido bien. En caso de éxito, prepare un
 mensaje del tipo "nombre apellido guardado con éxito." en la variable
 $mensaje y reinicialice las variables $apellido y $nombre.
@@ -114,19 +103,30 @@ En caso de error, recupere el mensaje de error MySQL y prepare un
 mensaje del tipo "Error durante la ejecución de la consulta (texto del
 error MySQL)." en la variable $mensaje.*/
 
-
-
 /* Se ha podido producir un error eventual durante la conexión, durante la
 preparación de la consulta o después; para recuperar el mensaje de
 error, debe determinar en qué etapa se produjo el error, por ejemplo
 probando el valor del identificador de conexión y de la consulta, para
 llamar a la función correspondiente.*/
 
+if ($ok) {
+    $conn = new mysqli('127.0.0.1', 'root', '', 'autores');
+
+    $consulta = 'INSERT INTO `autores` (`apellido`, `nombre`) VALUES ("' . $apellido . '", "' . $nombre . '")';
+
+    $conn->query($consulta);
+
+    if ($conn->connect_error || $conn->error) {
+        $ok = false;
+        $mensaje = 'Error durante la ejecucion de la consulta: ' . ($conn->connect_error ? ($conn->connect_error . ($conn->error ? (' / ' . $conn->error) : '')) : ($conn->error ? $conn->error : '')) ;
+    } else {
+        print 'Autor ' . $autor . ' anyadido con exito';
+        $nombre = '';
+        $autor = '';
+    }
+}
 
 
-/* En la página HTML, al final, muestre el contenido de la
-variable $mensaje y después añada un enlace llamado "Ver la lista" a la
-página inicio.php.*/
 
 
 
@@ -242,11 +242,18 @@ problema, es posible utilizar un poco de código JavaScript.*/
 
     <h4>
     <?php
+    /* En la página HTML, al final, muestre el contenido de la
+    variable $mensaje y después añada un enlace llamado "Ver la lista" a la
+    página inicio.php.*/
+
     if (isset($autor)) {
         print $autor;
     } else {
-        print 'Los datos introducidos no son correctos';
+        print 'Los datos introducidos no son correctos.<br/>';
     }
+
+    print $mensaje;
+
     ?>
     </h4>
     </article>
