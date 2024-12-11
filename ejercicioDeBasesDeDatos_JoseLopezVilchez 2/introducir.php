@@ -118,7 +118,7 @@ if ($ok) {
 
     if ($conn->connect_error || $conn->error) {
         $ok = false;
-        $mensaje = 'Error durante la ejecucion de la consulta: ' . ($conn->connect_error ? ($conn->connect_error . ($conn->error ? (' / ' . $conn->error) : '')) : ($conn->error ? $conn->error : '')) ;
+        $mensaje = 'Error durante la ejecucion de la consulta: ' . ($conn->connect_error ? ($conn->connect_error . ($conn->error ? (' / ' . $conn->error) : '')) : ($conn->error ? $conn->error : ''));
     } else {
         print 'Autor ' . $autor . ' anyadido con exito';
         $nombre = '';

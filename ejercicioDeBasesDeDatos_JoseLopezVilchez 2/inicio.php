@@ -66,7 +66,7 @@ $conn = new mysqli('127.0.0.1', 'root', '', 'autores');
 
 $consulta = 'SELECT nombre, apellido FROM autores ORDER BY nombre ASC;';
 
-$resultado = $conn->query($consulta);
+$result = $conn->query($consulta);
 
 if ($conn->connect_error || $conn->error) {
     $ok = false;
