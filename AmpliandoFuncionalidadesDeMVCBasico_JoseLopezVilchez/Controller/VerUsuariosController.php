@@ -15,21 +15,21 @@ switch($action){
         $pageTitle = "Insertar usuario";
         require('Views/InsertarUsuariosView.php');
         break;
-    case "guardar":
-        //Guarda la información del nuevo usuario
-        // $result = $con->insertUser();
-        break;
     case "crearUsuario":
-        
+        $usuarios = $con->crearUsuario();
+        require('Views/CrearUsuarioView.php');
         break;
     case "editarUsuario":
-        
+        $usuarios = $con->editarUsuario();
+        require('Views/EditarUsuarioView.php');
         break;
     case "mostrarUsuario":
-        
+        $usuarios = $con->mostrarUsuario();
+        require('Views/MostrarUsuarioView.php');
         break;
     case "eliminarUsuario":
-        
+        $usuarios = $con->eliminarUsuario();
+        require('Views/EliminarUsuarioView.php');
         break;
 }
     
