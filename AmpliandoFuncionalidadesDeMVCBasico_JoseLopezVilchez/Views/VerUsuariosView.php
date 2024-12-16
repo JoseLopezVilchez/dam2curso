@@ -2,7 +2,7 @@
 require('Views/commons/header.php');
 ?>
     
-    <table>
+    <table border="1">
 
         <thead>
             <tr>
@@ -18,6 +18,10 @@ require('Views/commons/header.php');
                     echo "<tr>";
                     echo "<td>" . $user['username'] . "</td>";
                     echo "<td>" . $user['nombre'] . "</td>";
+                    echo "<td>
+                        <a class='btn btn-primary' href='index.php?controller=Usuario&action=editar&id=" . $user['id'] . "'>Editar</a>
+                        <a class='btn btn-danger' href='index.php?controller=Usuario&action=eliminar&id=" . $user['id'] . "'>Elliminar</a>
+                    </td>";
                     echo "</tr>";
                 }
             ?>
@@ -26,5 +30,7 @@ require('Views/commons/header.php');
 
     </table>
 
-</body>
-</html>
+
+<?php
+require('Views/commons/footer.php');
+?>
